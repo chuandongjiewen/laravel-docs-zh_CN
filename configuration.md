@@ -1,32 +1,32 @@
-# Configuration
+# 配置
 
-- [Introduction](#introduction)
-- [Environment Configuration](#environment-configuration)
-- [Maintenance Mode](#maintenance-mode)
+- [介绍](#introduction)
+- [环境配置](#environment-configuration)
+- [维护模式](#maintenance-mode)
 
 <a name="introduction"></a>
-## Introduction
+## 介绍
 
-All of the configuration files for the Laravel framework are stored in the `app/config` directory. Each option in every file is documented, so feel free to look through the files and get familiar with the options available to you.
+Laravel框架所有的配置文件存储在`app/config`文件夹中。所有配置文件中的选项都有注释，建议把所有的配置文件都过一遍，熟悉里面的各项配置。
 
-Sometimes you may need to access configuration values at run-time. You may do so using the `Config` class:
+有时候你可能需要在运行时获取配置，可以使用`Config`类：
 
-**Accessing A Configuration Value**
+**获取一个配置的值**
 
 	Config::get('app.timezone');
 
-Notice that "dot" style syntax may be used to access values in the various files. You may also set configuration values at run-time:
+注意 "." 语法用来访问不同配置文件中的值，你也可以在运行时设置配置的值：
 
-**Setting A Configuration Value**
+**设置一个配置的值**
 
 	Config::set('database.default', 'sqlite');
 
 <a name="environment-configuration"></a>
-## Environment Configuration
+## 环境配置
 
-It is often helpful to have different configuration values based on the environment the application is running in. For example, you may wish to use a different cache driver on your local development machine than on the production server. It is easy to accomplish this using environment based configuration.
+通常我们需要在程序运行的不同环境中使用不同的配置。例如，你可能希望在本地开发环境和生产环境中使用不同的缓存驱动器。通过基于环境的配置可以很容易地满足这个需求。
 
-Simply create a folder within the `config` directory that matches your environment name, such as `local`. Next, create the configuration files you wish to override and specify the options for that environment. For example, to override the cache driver for the local environment, you would create a `cache.php` file in `app/config/local` with the following content:
+简单地在`config`文件夹中新建一个文件夹，取名为环境名，如`local`，然后，新建一个你希望覆盖的配置文件。例如，在local环境中设置不同的缓存驱动器配置，你应该在`app/config/local`文件夹中新建一个`cache.php`文件，内容如下：
 
 	<?php
 
@@ -36,11 +36,11 @@ Simply create a folder within the `config` directory that matches your environme
 
 	);
 
-> **Note:** Do not use 'testing' as an environment name. This is reserved for unit testing.
+> **注意：**不要使用'testing'作为环境名称，这个名称用于单元测试。
 
-Notice that you do not have to specify _every_ option that is in the base configuration file, but only the options you wish to override. The environment configuration files will "cascade" over the base files.
+注意，你不必在新环境中设置所有在基础配置文件中的配置项，只需要设置你需要覆盖的配置项。环境配置的优先级高于基础配置文件。
 
-Next, we need to instruct the framework how to determine which environment it is running in. The default environment is always `production`. However, you may setup other environments within the `bootstrap/start.php` file at the root of your installation. In this file you will find an `$app->detectEnvironment` call. The array passed to this method is used to determine the current environment. You may add other environments and machine names to the array as needed.
+接下来，我们需要告诉框架它所运行的环境。默认的环境是`production`环境，但你可以在`bootstrap/start.php`文件中设置其它环境。在这个文件中你可以看到一个`$app->detectEnvironment`的调用，传递到这个方法的数组是用来决定当前环境的，你可以在需要的时候添加其它环境和机器名到这个数组。
 
     <?php
 
@@ -50,28 +50,28 @@ Next, we need to instruct the framework how to determine which environment it is
 
     ));
 
-You may also pass a `Closure` to the `detectEnvironment` method, allowing you to implement your own environment detection:
+你也可以传递一个`闭包`到`detectEnvironment`方法，它可以使用你设定的环境。
 
 	$env = $app->detectEnvironment(function()
 	{
 		return $_SERVER['MY_LARAVEL_ENV'];
 	});
 
-You may access the current application environment via the `environment` method:
+你可以通过`environment`方法访问当前程序环境。
 
-**Accessing The Current Application Environment**
+**获取当前程序环境**
 
 	$environment = App::environment();
 
 <a name="maintenance-mode"></a>
-## Maintenance Mode
+## 维护模式
 
-When your application is in maintenance mode, a custom view will be displayed for all routes into your applicatoin. This makes it easy to "disable" your application while it is updating. A call to the `App::down` method is already present in your `app/start/global.php` file. The response from this method will be sent to users when your application is in maintenance mode.
+当你的应用处于维护模式，所有的路由都会转发到一个自定义的页面，这让你很容易在应用升级的时候关闭应用。在`app/start/global.php`文件中已经存在一个对`App::down`方法的调用，在应用处于维护模式的时候这个方法会向用户发送一个响应。
 
-To enable maintenance mode, simply execute the `down` Artisan command:
+开启维护模式，只需简单地执行`down`Artisan命令
 
 	php artisan down
 
-To disable maintenance mode, use the `up` command:
+关闭维护模式，使用`up`命令
 
 	php artisan up
