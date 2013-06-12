@@ -35,3 +35,5 @@
 - Artisan命令行工具
     - [概观](/artisan)
     - [开发](/commands)
+- Just a test, you can ignore it
+    - [test](/test)
