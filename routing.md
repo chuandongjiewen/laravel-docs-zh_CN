@@ -12,7 +12,7 @@
 - [Resource Controllers](#resource-controllers)
 
 <a name="basic-routing"></a>
-## Basic Routing
+## 基础
 
 应用程序的大部分路由是在 `app/routes.php` 文件里定义的。 而最简单的路由则是由一
 个URI和回调函数组成的。
@@ -140,7 +140,6 @@ After filters receive a `$response` as the third argument passed to the filter:
 
 **基于模式的过滤器**
 
-You may also specify that a filter applies to an entire set of routes based on their URI.
 你也可以指定一个过滤器，应用在符合模式的URI的路由集。
 
 	Route::filter('admin', function()
@@ -150,7 +149,6 @@ You may also specify that a filter applies to an entire set of routes based on t
 
 	Route::when('admin/*', 'admin');
 
-In the example above, the `admin` filter would be applied to all routes beginning with `admin/`. The asterisk is used as a wildcard, and will match any combination of characters.
 在上面的例子中，`admin`过滤器将会被应用在所有以`admin`开头的路由上。 *号作为通配
 符使用，匹配所有字符的组合。
 
