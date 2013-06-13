@@ -1,8 +1,8 @@
 # 路由
 
 - [基础](#basic-routing)
-- [Route Parameters](#route-parameters)
-- [Route Filters](#route-filters)
+- [路由参数](#route-parameters)
+- [路由过滤o](#route-filters)
 - [Named Routes](#named-routes)
 - [Route Groups](#route-groups)
 - [Sub-Domain Routing](#sub-domain-routing)
@@ -15,63 +15,63 @@
 ## Basic Routing
 
 应用程序的大部分路由是在 `app/routes.php` 文件里定义的。 而最简单的路由则是由一
-个URI和毁掉函数组成的。
+个URI和回调函数组成的。
 
-**Basic GET Route**
+**GET请求方式简单路由**
 
 	Route::get('/', function()
 	{
 		return 'Hello World';
 	});
 
-**Basic POST Route**
+**POST请求方式简单路由**
 
 	Route::post('foo/bar', function()
 	{
 		return 'Hello World';
 	});
 
-**Registering A Route Responding To Any HTTP Verb**
+**为所有HTTP请求注册一个路由响应**
 
 	Route::any('foo', function()
 	{
 		return 'Hello World';
 	});
 
-**Forcing A Route To Be Served Over HTTPS**
+**使路由强制运行在HTTPS请求下**
 
 	Route::get('foo', array('https', function()
 	{
 		return 'Must be over HTTPS';
 	}));
 
-Often, you will need to generate URLs to your routes, you may do so using the `URL::to` method:
+通常，如果你需要为路由生成URI，则可以使用 `URL::to` 方法：
 
 	$url = URL::to('foo');
 
 <a name="route-parameters"></a>
-## Route Parameters
+## 路由参数
 
 	Route::get('user/{id}', function($id)
 	{
 		return 'User '.$id;
 	});
 
-**Optional Route Parameters**
+**可选的路由参数**
 
 	Route::get('user/{name?}', function($name = null)
 	{
 		return $name;
 	});
 
-**Optional Route Parameters With Defaults**
+**带默认值的可选路由参数**
 
 	Route::get('user/{name?}', function($name = 'John')
 	{
 		return $name;
 	});
 
-**Regular Expression Route Constraints**
+**用正则表达式约束路由**
 
 	Route::get('user/{name}', function($name)
 	{
@@ -86,11 +86,14 @@ Often, you will need to generate URLs to your routes, you may do so using the `U
 	->where('id', '[0-9]+');
 
 <a name="route-filters"></a>
-## Route Filters
+## 路由过滤器
 
 Route filters provide a convenient way of limiting access to a given route, which is useful for creating areas of your site which require authentication. There are several filters included in the Laravel framework, including an `auth` filter, an `auth.basic` filter, a `guest` filter, and a `csrf`filter. These are located in the `app/filters.php` file.
+路由过滤器提供了一个路由访问限制的简单方法，这对我们网站中需要权限认证的网页很有
+用。 在Laravel中，有几个过滤器，包括 `auth`过滤器，`auth.basic`过滤器，`guest`过
+滤器，`crsf`过滤器。可以在 `app/filters` 文件中找到。
 
-**Defining A Route Filter**
+**定义路由过滤器**
 
 	Route::filter('old', function()
 	{
@@ -100,23 +103,24 @@ Route filters provide a convenient way of limiting access to a given route, whic
 		}
 	});
 
-If a response is returned from a filter, that response will be considered the response to the request and the route will not be executed, and any `after` filters on the route will also be cancelled.
+万一从一个过滤器中返回一个响应，那么这个响应将会被当成当前请求的响应，而这个路由
+则不会被执行，任何在这个路由上的`after`过滤器也会被全部取消。
 
-**Attaching A Filter To A Route**
+**为路由添加一个过滤器**
 
 	Route::get('user', array('before' => 'old', function()
 	{
 		return 'You are over 200 years old!';
 	}));
 
-**Attaching Multiple Filters To A Route**
+**为路由添加多个过滤器**
 
 	Route::get('user', array('before' => 'auth|old', function()
 	{
 		return 'You are authenticated and over 200 years old!';
 	}));
 
-**Specifying Filter Parameters**
+**指定路由参数**
 
 	Route::filter('age', function($route, $request, $value)
 	{
@@ -135,9 +139,10 @@ After filters receive a `$response` as the third argument passed to the filter:
 		//
 	});
 
-**Pattern Based Filters**
+**基于模式的过滤器**
 
 You may also specify that a filter applies to an entire set of routes based on their URI.
+你也可以指定一个过滤器，应用在符合模式的URI的路由集。
 
 	Route::filter('admin', function()
 	{
@@ -147,8 +152,10 @@ You may also specify that a filter applies to an entire set of routes based on t
 	Route::when('admin/*', 'admin');
 
 In the example above, the `admin` filter would be applied to all routes beginning with `admin/`. The asterisk is used as a wildcard, and will match any combination of characters.
+在上面的例子中，`admin`过滤器将会被应用在所有以`admin`开头的路由上。 *号作为通配
+符使用，匹配所有字符的组合。
 
-**Filter Classes**
+**过滤器类**
 
 For advanced filtering, you may wish to use a class instead of a Closure. Since filter classes are resolved out of the application [IoC container](/docs/ioc), you will be able to utilize dependency injection in these filters for greater testability.
 
