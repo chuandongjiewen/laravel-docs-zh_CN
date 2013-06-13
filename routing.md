@@ -2,7 +2,7 @@
 
 - [基础](#basic-routing)
 - [路由参数](#route-parameters)
-- [路由过滤o](#route-filters)
+- [路由过滤](#route-filters)
 - [Named Routes](#named-routes)
 - [Route Groups](#route-groups)
 - [Sub-Domain Routing](#sub-domain-routing)
@@ -17,14 +17,14 @@
 应用程序的大部分路由是在 `app/routes.php` 文件里定义的。 而最简单的路由则是由一
 个URI和回调函数组成的。
 
-**GET请求方式简单路由**
+**GET请求方式的简单路由**
 
 	Route::get('/', function()
 	{
 		return 'Hello World';
 	});
 
-**POST请求方式简单路由**
+**POST请求方式的简单路由**
 
 	Route::post('foo/bar', function()
 	{
@@ -88,7 +88,6 @@
 <a name="route-filters"></a>
 ## 路由过滤器
 
-Route filters provide a convenient way of limiting access to a given route, which is useful for creating areas of your site which require authentication. There are several filters included in the Laravel framework, including an `auth` filter, an `auth.basic` filter, a `guest` filter, and a `csrf`filter. These are located in the `app/filters.php` file.
 路由过滤器提供了一个路由访问限制的简单方法，这对我们网站中需要权限认证的网页很有
 用。 在Laravel中，有几个过滤器，包括 `auth`过滤器，`auth.basic`过滤器，`guest`过
 滤器，`crsf`过滤器。可以在 `app/filters` 文件中找到。
