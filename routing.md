@@ -1,6 +1,6 @@
-# Routing
+# 路由
 
-- [Basic Routing](#basic-routing)
+- [基础](#basic-routing)
 - [Route Parameters](#route-parameters)
 - [Route Filters](#route-filters)
 - [Named Routes](#named-routes)
@@ -14,7 +14,8 @@
 <a name="basic-routing"></a>
 ## Basic Routing
 
-Most of the routes for your application will be defined in the `app/routes.php` file. The simplest Laravel routes consist of a URI and a Closure callback.
+应用程序的大部分路由是在 `app/routes.php` 文件里定义的。 而最简单的路由则是由一
+个URI和毁掉函数组成的。
 
 **Basic GET Route**
 
